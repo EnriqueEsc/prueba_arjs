@@ -1,54 +1,49 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const marker = document.querySelector('#mi-marcador');
+    // 1. Ya no buscamos el marcador, buscamos la escena completa
+    const scene = document.querySelector('a-scene');
     const boton = document.querySelector('#mi-boton');
+    const textoEstado = document.querySelector('#texto-estado');
 
     const modelos = [
-        './3d_models/Juego monos.glb',
-        './3d_models/biblio.glb' 
+        './3d_models/biblio.glb',
+        './3d_models/Juego monos.glb' 
     ];
     let indiceActual = 0;
-    
-    // Usaremos esta variable para saber cuál es el modelo que está en pantalla
     let modeloActual = null; 
 
-    // Creamos una función encargada de hacer todo el trabajo sucio
+    // 2. Coordenadas donde quieres que aparezca el edificio
+    // IMPORTANTE: Cambia esto por las coordenadas exactas de donde vayas a estar parado
+    const latitudDestino = 19.2833; 
+    const longitudDestino = -99.6500;
+
     function cargarModelo(indice) {
-        // 1. Si ya existe un modelo en pantalla, lo borramos primero
         if (modeloActual !== null) {
-            marker.removeChild(modeloActual);
+            scene.removeChild(modeloActual);
         }
 
-        // 2. Creamos una entidad 3D totalmente nueva
         const nuevoModelo = document.createElement('a-entity');
-        
-        // 3. Le asignamos la ruta del modelo correspondiente
         nuevoModelo.setAttribute('gltf-model', `url(${modelos[indice]})`);
         
-        // ¡OJO AQUÍ! Podrías necesitar escalas diferentes para cada modelo
-        nuevoModelo.setAttribute('scale', '0.5 0.5 0.5'); 
-        nuevoModelo.setAttribute('position', '0 0 0'); 
-        nuevoModelo.setAttribute('rotation', '-90 0 0'); 
-
-        // 4. Añadimos el nuevo modelo al marcador
-        marker.appendChild(nuevoModelo);
+        // La escala dependerá de cómo exportaste tu .glb, 1 1 1 es el tamaño real
+        nuevoModelo.setAttribute('scale', '1 1 1'); 
         
-        // 5. Guardamos la referencia para poder borrarlo la próxima vez
+        // 3. LA MAGIA: En lugar de 'position', usamos 'gps-entity-place'
+        nuevoModelo.setAttribute('gps-entity-place', `latitude: ${latitudDestino}; longitude: ${longitudDestino};`);
+
+        // Añadimos el modelo a la escena principal
+        scene.appendChild(nuevoModelo);
         modeloActual = nuevoModelo;
+        
+        textoEstado.innerText = "¡Edificio proyectado en el mapa!";
     }
 
-    // Inicializamos la app cargando el primer modelo (índice 0)
+    // Cargamos el primer modelo
     cargarModelo(indiceActual);
-    console.log("¡Modelo inicial cargado!");
 
-    // Lógica del botón
+    // Lógica del botón para cambiar de edificio
     boton.addEventListener('click', () => {
-        // Calculamos el siguiente índice
         indiceActual = (indiceActual + 1) % modelos.length;
-        
-        // Llamamos a la función para que destruya el viejo y cree el nuevo
         cargarModelo(indiceActual);
-        
-        boton.innerText = "Cambiar Modelo (" + (indiceActual + 1) + "/" + modelos.length + ")";
-        console.log(`Modelo cambiado a: ${modelos[indiceActual]}`);
+        boton.innerText = "Cambiar Edificio (" + (indiceActual + 1) + "/" + modelos.length + ")";
     });
 });
