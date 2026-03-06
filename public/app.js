@@ -1,43 +1,54 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. Seleccionamos el marcador y el botón
     const marker = document.querySelector('#mi-marcador');
-    const boton = document.querySelector('#mi-boton'); // Asegúrate de que el ID coincida con tu HTML
+    const boton = document.querySelector('#mi-boton');
 
-    // 2. Creamos una lista con las rutas de tus modelos
-    // Cambia "Otro modelo.glb" por el nombre real de tu segundo archivo
     const modelos = [
         './3d_models/Juego monos.glb',
         './3d_models/biblio.glb' 
     ];
-    let indiceActual = 0; // Esta variable nos dirá qué modelo estamos mostrando
+    let indiceActual = 0;
+    
+    // Usaremos esta variable para saber cuál es el modelo que está en pantalla
+    let modeloActual = null; 
 
-    // 3. Creamos la entidad de A-Frame
-    const modeloPersonalizado = document.createElement('a-entity');
+    // Creamos una función encargada de hacer todo el trabajo sucio
+    function cargarModelo(indice) {
+        // 1. Si ya existe un modelo en pantalla, lo borramos primero
+        if (modeloActual !== null) {
+            marker.removeChild(modeloActual);
+        }
 
-    // 4. Cargamos el modelo inicial (el índice 0) y sus ajustes
-    modeloPersonalizado.setAttribute('gltf-model', `url(${modelos[indiceActual]})`);
-    modeloPersonalizado.setAttribute('scale', '0.5 0.5 0.5'); 
-    modeloPersonalizado.setAttribute('position', '0 0 0'); 
-    modeloPersonalizado.setAttribute('rotation', '-90 0 0'); 
+        // 2. Creamos una entidad 3D totalmente nueva
+        const nuevoModelo = document.createElement('a-entity');
+        
+        // 3. Le asignamos la ruta del modelo correspondiente
+        nuevoModelo.setAttribute('gltf-model', `url(${modelos[indice]})`);
+        
+        // ¡OJO AQUÍ! Podrías necesitar escalas diferentes para cada modelo
+        nuevoModelo.setAttribute('scale', '0.5 0.5 0.5'); 
+        nuevoModelo.setAttribute('position', '0 0 0'); 
+        nuevoModelo.setAttribute('rotation', '-90 0 0'); 
 
-    // 5. Añadimos el modelo al marcador
-    marker.appendChild(modeloPersonalizado);
-    console.log("¡Modelo inicial inyectado!");
+        // 4. Añadimos el nuevo modelo al marcador
+        marker.appendChild(nuevoModelo);
+        
+        // 5. Guardamos la referencia para poder borrarlo la próxima vez
+        modeloActual = nuevoModelo;
+    }
 
-    // 6. Lógica del botón para cambiar el modelo
+    // Inicializamos la app cargando el primer modelo (índice 0)
+    cargarModelo(indiceActual);
+    console.log("¡Modelo inicial cargado!");
+
+    // Lógica del botón
     boton.addEventListener('click', () => {
-        // Sumamos 1 al índice. El operador % hace que vuelva a 0 cuando llega al final de la lista
+        // Calculamos el siguiente índice
         indiceActual = (indiceActual + 1) % modelos.length;
         
-        // Actualizamos la ruta del modelo en la entidad
-        modeloPersonalizado.setAttribute('gltf-model', `url(${modelos[indiceActual]})`);
-        modeloPersonalizado.setAttribute('scale', '0.5 0.5 0.5'); 
-        modeloPersonalizado.setAttribute('position', '0 0 0'); 
-        modeloPersonalizado.setAttribute('rotation', '-90 0 0'); 
+        // Llamamos a la función para que destruya el viejo y cree el nuevo
+        cargarModelo(indiceActual);
         
-        // Opcional: Cambiar el texto del botón para dar retroalimentación
         boton.innerText = "Cambiar Modelo (" + (indiceActual + 1) + "/" + modelos.length + ")";
-        
-        console.log(`Modelo cambiado a: ${nuevaRuta}`);
+        console.log(`Modelo cambiado a: ${modelos[indiceActual]}`);
     });
 });
