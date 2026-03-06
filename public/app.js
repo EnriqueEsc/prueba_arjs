@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
         nuevoModelo.setAttribute('gltf-model', `url(${modelos[indiceActual]})`);
         
         // Empieza con una escala pequeña por si el modelo es gigante
-        nuevoModelo.setAttribute('scale', '0.05 0.05 0.05'); 
+        nuevoModelo.setAttribute('scale', '5 5 5'); 
         
         // Colocamos el modelo en las coordenadas calculadas
         nuevoModelo.setAttribute('gps-entity-place', `latitude: ${latitud}; longitude: ${longitud};`);
@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
             
             const nuevoModelo = document.createElement('a-entity');
             nuevoModelo.setAttribute('gltf-model', `url(${modelos[indiceActual]})`);
-            nuevoModelo.setAttribute('scale', '5 5 5'); // Mantén la escala pequeña
+            nuevoModelo.setAttribute('scale', '50 50 50'); // Mantén la escala pequeña
             nuevoModelo.setAttribute('gps-entity-place', gpsAnterior); // Reutilizamos las coordenadas
             
             scene.appendChild(nuevoModelo);
