@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
             
             // 2. MAGIA: Sumamos ~15 metros hacia el norte a tu latitud
             // 0.00015 grados de latitud son aproximadamente 15-18 metros
-            const latitudDestino = miLatitud + 0.00015;
+            const latitudDestino = miLatitud;
             const longitudDestino = miLongitud; // Misma longitud (recto hacia el norte)
 
             console.log(`Tu posición: ${miLatitud}, ${miLongitud}`);
