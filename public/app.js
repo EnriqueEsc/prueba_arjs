@@ -30,8 +30,10 @@ document.addEventListener("DOMContentLoaded", () => {
         indiceActual = (indiceActual + 1) % modelos.length;
         
         // Actualizamos la ruta del modelo en la entidad
-        const nuevaRuta = modelos[indiceActual];
-        modeloPersonalizado.setAttribute('gltf-model', `url(${nuevaRuta})`);
+        modeloPersonalizado.setAttribute('gltf-model', `url(${modelos[indiceActual]})`);
+        modeloPersonalizado.setAttribute('scale', '0.5 0.5 0.5'); 
+        modeloPersonalizado.setAttribute('position', '0 0 0'); 
+        modeloPersonalizado.setAttribute('rotation', '-90 0 0'); 
         
         // Opcional: Cambiar el texto del botón para dar retroalimentación
         boton.innerText = "Cambiar Modelo (" + (indiceActual + 1) + "/" + modelos.length + ")";
