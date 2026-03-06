@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Si no ves tu modelo a la primera, juega con estos valores.
     modeloPersonalizado.setAttribute('scale', '0.5 0.5 0.5'); // Mitad de su tamaño original
     modeloPersonalizado.setAttribute('position', '0 0 0'); // Centrado en el marcador
-    modeloPersonalizado.setAttribute('rotation', '-90 0 0'); // Rotación en grados (X Y Z)
+    modeloPersonalizado.setAttribute('rotation', '90 0 0'); // Rotación en grados (X Y Z)
 
     // 5. Añadimos el modelo al marcador
     marker.appendChild(modeloPersonalizado);
