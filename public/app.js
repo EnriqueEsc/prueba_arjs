@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Cambia "Otro modelo.glb" por el nombre real de tu segundo archivo
     const modelos = [
         './3d_models/Juego monos.glb',
-        './3d_models/Otro modelo.glb' 
+        './3d_models/biblio.glb' 
     ];
     let indiceActual = 0; // Esta variable nos dirá qué modelo estamos mostrando
 
