@@ -30,10 +30,10 @@ document.addEventListener("DOMContentLoaded", () => {
         
         textoEstado.innerText = "¡Modelo proyectado a 15m de ti!";
     }
-
+    
     // 1. DEFINIMOS LAS COORDENADAS FIJAS
-    const latitudFija = 19.278725929288036;
-    const longitudFija = -99.67151197867713;
+    const latitudFija = 19.280584260231716;
+    const longitudFija = -99.67281553228678;
 
     textoEstado.innerText = "Cargando modelo en la ubicación asignada...";
     console.log(`Destino del modelo fijado en: ${latitudFija}, ${longitudFija}`);
