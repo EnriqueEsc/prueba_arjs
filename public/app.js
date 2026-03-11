@@ -31,34 +31,28 @@ document.addEventListener("DOMContentLoaded", () => {
         textoEstado.innerText = "¡Modelo proyectado a 15m de ti!";
     }
 
-    // 1. OBTENEMOS TU UBICACIÓN ACTUAL
+    // 1. DEFINIMOS LAS COORDENADAS FIJAS
+    const latitudFija = 19.281070307910916;
+    const longitudFija = -99.67763537761503;
+
+    textoEstado.innerText = "Cargando modelo en la ubicación asignada...";
+    console.log(`Destino del modelo fijado en: ${latitudFija}, ${longitudFija}`);
+
+    // 2. Cargamos el modelo directamente ahí
+    inyectarModeloEnUbicacion(latitudFija, longitudFija);
+    textoEstado.innerText = "¡Modelo anclado en posición fija!";
+
+    // Opcional: Solo si quieres verificar que el GPS del usuario está activo,
+    // puedes dejar un "listener" en segundo plano, pero ya no lo usamos para mover el modelo.
     if ('geolocation' in navigator) {
-        textoEstado.innerText = "Calculando tu posición GPS...";
-        
-        navigator.geolocation.getCurrentPosition((position) => {
-            const miLatitud = position.coords.latitude;
-            const miLongitud = position.coords.longitude;
-            
-            // 2. MAGIA: Sumamos ~15 metros hacia el norte a tu latitud
-            // 0.00015 grados de latitud son aproximadamente 15-18 metros
-            const latitudDestino = miLatitud;
-            const longitudDestino = miLongitud; // Misma longitud (recto hacia el norte)
-
-            console.log(`Tu posición: ${miLatitud}, ${miLongitud}`);
-            console.log(`Destino del modelo: ${latitudDestino}, ${longitudDestino}`);
-
-            // 3. Cargamos el modelo allí
-            inyectarModeloEnUbicacion(latitudDestino, longitudDestino);
-            
-        }, (error) => {
-            textoEstado.innerText = "Error de GPS: Asegúrate de dar permisos.";
-            console.error(error);
-        }, {
-            enableHighAccuracy: true, // Forzamos al celular a usar la máxima precisión
-            maximumAge: 0
-        });
-    } else {
-        textoEstado.innerText = "Tu navegador no soporta GPS.";
+        navigator.geolocation.watchPosition(
+            (position) => {
+                console.log(`Tu posición actual: ${position.coords.latitude}, ${position.coords.longitude}`);
+                // Aquí podrías calcular la distancia entre el usuario y el modelo si quisieras
+            }, 
+            (error) => console.error("Error GPS:", error),
+            { enableHighAccuracy: true }
+        );
     }
 
     // Lógica del botón (ahora necesitamos la última lat/lon calculada para no perder la posición)
