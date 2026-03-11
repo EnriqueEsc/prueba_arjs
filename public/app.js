@@ -32,8 +32,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     // 1. DEFINIMOS LAS COORDENADAS FIJAS
-    const latitudFija = 19.280584260231716;
-    const longitudFija = -99.67281553228678;
+    const latitudFija = 19.28154568552579;
+    const longitudFija = -99.67775975950951;
 
     textoEstado.innerText = "Cargando modelo en la ubicación asignada...";
     console.log(`Destino del modelo fijado en: ${latitudFija}, ${longitudFija}`);
