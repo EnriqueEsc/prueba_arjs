@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
         nuevoModelo.setAttribute('gltf-model', `url(${modelos[indiceActual]})`);
         
         // Empieza con una escala pequeña por si el modelo es gigante
-        nuevoModelo.setAttribute('scale', '5 5 5'); 
+        nuevoModelo.setAttribute('scale', '50 50 50'); 
         
         // Colocamos el modelo en las coordenadas calculadas
         nuevoModelo.setAttribute('gps-entity-place', `latitude: ${latitud}; longitude: ${longitud};`);
@@ -32,8 +32,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // 1. DEFINIMOS LAS COORDENADAS FIJAS
-    const latitudFija = 19.281070307910916;
-    const longitudFija = -99.67763537761503;
+    const latitudFija = 19.278725929288036;
+    const longitudFija = -99.67151197867713;
 
     textoEstado.innerText = "Cargando modelo en la ubicación asignada...";
     console.log(`Destino del modelo fijado en: ${latitudFija}, ${longitudFija}`);
